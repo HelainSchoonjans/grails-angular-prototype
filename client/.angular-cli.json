@@ -6,10 +6,11 @@
   "apps": [
     {
       "root": "src",
-      "outDir": "dist",
+      "outDir": "../server/src/main/webapp",
       "assets": [
         "images",
-        "favicon.ico"
+        "favicon.ico",
+        "resources"
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -26,7 +27,8 @@
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
-        "prod": "environments/environment.prod.ts"
+        "prod": "environments/environment.prod.ts",
+        "staging": "environments/environment.staging.ts"
       }
     }
   ],

@@ -23,3 +23,15 @@ task test(type: YarnTask, dependsOn: 'yarn') {
 task integrationTest(type: YarnTask, dependsOn: 'yarn') {
     args = ['run', 'e2e']
 }
+
+task build(type: YarnTask, dependsOn: 'yarn') {
+    group = 'build'
+    description = 'Compile client side assets for production'
+    args = ['run', 'build']
+}
+
+task buildStaging(type: YarnTask, dependsOn: 'yarn') {
+    group = 'build'
+    description = 'Compile client side assets for staging'
+    args = ['run', 'buildStaging']
+}
