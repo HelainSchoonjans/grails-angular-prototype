@@ -1,4 +1,5 @@
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
 import com.bmuschko.gradle.docker.tasks.image.Dockerfile
 
 buildscript {
@@ -13,6 +14,7 @@ buildscript {
         classpath "org.grails.plugins:views-gradle:1.1.6"
 
         classpath "com.bmuschko:gradle-docker-plugin:3.6.0"
+        classpath "com.patdouble.awsecr:com.patdouble.awsecr.gradle.plugin:0.3.3"
     }
 }
 
@@ -25,6 +27,7 @@ apply plugin:"war"
 apply plugin:"org.grails.grails-web"
 apply plugin:"org.grails.plugins.views-json"
 apply plugin:"com.bmuschko.docker-remote-api"
+apply plugin: "com.patdouble.awsecr"
 
 repositories {
     mavenLocal()
@@ -100,10 +103,11 @@ clean {
 // HSC: you need to enable docker demon running on tls...
 ext {
     String name = "grails-angular-prototype"
+    dockerName = "xxxxxxxxxxxx.dkr.ecr.eu-central-1.amazonaws.com/heschoon/${name}"
     if(env == 'prod' || env == 'production' || !env) {
-        dockerTag = "heschoon/${name}:latest".toLowerCase()
+        dockerTag = "latest".toLowerCase()
     } else {
-        dockerTag = "heschoon/${name}:${env}.latest".toLowerCase()
+        dockerTag = "${env}.latest".toLowerCase()
     }
     dockerBuildDir = mkdir("${buildDir}/docker")
 }
@@ -143,5 +147,19 @@ task buildImage(type: DockerBuildImage, dependsOn: createDockerfile) {
     group = 'Docker'
 
     inputDir = file(dockerBuildDir)
+    tag = "${dockerName}:${dockerTag}"
+}
+
+task pushImage(type: DockerPushImage, dependsOn: buildImage) {
+    description = 'Push the docker on ECR'
+    group = 'Docker'
+
+    imageName = dockerName
     tag = dockerTag
+}
+
+docker {
+    registryCredentials {
+        url = 'https://xxxxxxxxxxx.dkr.ecr.eu-central-1.amazonaws.com'
+    }
 }

@@ -21,5 +21,7 @@ Do not use quotes when passing the environment!
 
 ## On AWS ECR
 
-Follow this tutorial.
+Follow this tutorial: https://objectpartners.com/2017/05/09/aws-ecr-with-gradle/.
 Attention, the url is set like: url = "someUrl"
+
+use the pushImage task.
