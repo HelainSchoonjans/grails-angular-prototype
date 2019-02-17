@@ -16,3 +16,10 @@ Running the docker in another environment requires to give it as an environment 
     docker run -p 8080:8080 -e env=staging heschoon/grails-angular-prototype
     
 Do not use quotes when passing the environment!
+
+# Pushing image
+
+## On AWS ECR
+
+Follow this tutorial.
+Attention, the url is set like: url = "someUrl"
